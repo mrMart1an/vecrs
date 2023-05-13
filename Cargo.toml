@@ -1,0 +1,20 @@
+[package]
+name = "vecrs"
+version = "0.1.0"
+edition = "2021"
+
+[profile.release]
+lto = true
+
+[dependencies]
+
+[dev-dependencies]
+criterion = { version = "0.4", features = ["html_reports"] }
+
+[[bench]]
+name = "vec3_bench"
+harness = false
+
+[[bench]]
+name = "vec2_bench"
+harness = false
