@@ -30,7 +30,18 @@ pub fn vec3_add(c: &mut Criterion) {
     let a_vec = black_box(Vec3::new(1.,2.,1.5));
     let b_vec = black_box(Vec3::new(2.,3.,5.2));
 
-    c.bench_function("vec3 add", |b| b.iter(|| &a_vec + &b_vec));
+    c.bench_function("vec3 add", |b| b.iter(|| a_vec + b_vec));
+}
+
+// Becnhmrk the add and the dot operation
+pub fn vec3_add_dot(c: &mut Criterion) {
+    let a_vec = black_box(Vec3::new(1.,2.,1.5));
+    let b_vec = black_box(Vec3::new(2.,3.,5.2));
+
+    c.bench_function("vec3 add + dot", |b| b.iter(|| {
+        let res = a_vec + b_vec;
+        Vec3::dot(&a_vec, &res)
+    }));
 }
 
 // Create the benchmarks group
@@ -41,6 +52,7 @@ criterion_group!(
     vec3_dot,
     vec3_cross,
     vec3_add,
+    vec3_add_dot,
 );
 
 // Run the benchmarks

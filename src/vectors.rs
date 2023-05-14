@@ -1,14 +1,14 @@
 use std::ops;
 
 // Define the Vec3 and Vec2 structs
-#[derive(Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq)]
 pub struct Vec3 {
     pub x: f64,
     pub y: f64,
     pub z: f64,
 }
 
-#[derive(Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq)]
 pub struct Vec2 {
     pub x: f64,
     pub y: f64,
@@ -39,7 +39,7 @@ impl Vec3 {
 
     /// Return the normalized vector
     /// (Keep direction but make the lenght 1.0)
-    pub fn normalize(&self) -> Self {
+    pub fn normalize(self) -> Self {
         self / self.lenght()
     }
 
@@ -76,7 +76,7 @@ impl Vec2 {
 
     /// Return the normalized vector
     ///(Keep direction but make the lenght 1.0)
-    pub fn normalize(&self) -> Self {
+    pub fn normalize(self) -> Self {
         self / self.lenght()
     }
     
@@ -102,10 +102,10 @@ impl std::fmt::Debug for Vec2 {
     }
 }
 
-// Overloading operaor for &Vec3 type
+// Overloading operaor for Vec3 type
 //
 // Implement Add operator
-impl ops::Add for &Vec3 {
+impl ops::Add for Vec3 {
     type Output = Vec3;
 
     fn add(self, rhs: Self) -> Self::Output {
@@ -118,7 +118,7 @@ impl ops::Add for &Vec3 {
 }
 
 // Implement Sub operator
-impl ops::Sub for &Vec3 {
+impl ops::Sub for Vec3 {
     type Output = Vec3;
 
     fn sub(self, rhs: Self) -> Self::Output {
@@ -131,7 +131,7 @@ impl ops::Sub for &Vec3 {
 }
 
 // Implement Mul operator
-impl ops::Mul for &Vec3 {
+impl ops::Mul for Vec3 {
     type Output = Vec3;
 
     fn mul(self, rhs: Self) -> Self::Output {
@@ -144,7 +144,7 @@ impl ops::Mul for &Vec3 {
 }
 
 // Implement Div operator
-impl ops::Div for &Vec3 {
+impl ops::Div for Vec3 {
     type Output = Vec3;
 
     fn div(self, rhs: Self) -> Self::Output {
@@ -157,7 +157,7 @@ impl ops::Div for &Vec3 {
 }
 
 // Implement Mul operator for scalar
-impl ops::Add<f64> for &Vec3 {
+impl ops::Add<f64> for Vec3 {
     type Output = Vec3;
 
     fn add(self, rhs: f64) -> Self::Output {
@@ -170,7 +170,7 @@ impl ops::Add<f64> for &Vec3 {
 }
 
 // Implement Div operator for scalar
-impl ops::Sub<f64> for &Vec3 {
+impl ops::Sub<f64> for Vec3 {
     type Output = Vec3;
 
     fn sub(self, rhs: f64) -> Self::Output {
@@ -183,7 +183,7 @@ impl ops::Sub<f64> for &Vec3 {
 }
 
 // Implement Mul operator for scalar
-impl ops::Mul<f64> for &Vec3 {
+impl ops::Mul<f64> for Vec3 {
     type Output = Vec3;
 
     fn mul(self, rhs: f64) -> Self::Output {
@@ -196,7 +196,7 @@ impl ops::Mul<f64> for &Vec3 {
 }
 
 // Implement Div operator for scalar
-impl ops::Div<f64> for &Vec3 {
+impl ops::Div<f64> for Vec3 {
     type Output = Vec3;
 
     fn div(self, rhs: f64) -> Self::Output {
@@ -208,10 +208,10 @@ impl ops::Div<f64> for &Vec3 {
     }
 }
 
-// Overloading operaor for &Vec2 type
+// Overloading operaor for Vec2 type
 //
 // Implement Add operator
-impl ops::Add for &Vec2 {
+impl ops::Add for Vec2 {
     type Output = Vec2;
 
     fn add(self, rhs: Self) -> Self::Output {
@@ -223,7 +223,7 @@ impl ops::Add for &Vec2 {
 }
 
 // Implement Sub operator
-impl ops::Sub for &Vec2 {
+impl ops::Sub for Vec2 {
     type Output = Vec2;
 
     fn sub(self, rhs: Self) -> Self::Output {
@@ -235,7 +235,7 @@ impl ops::Sub for &Vec2 {
 }
 
 // Implement Mul operator
-impl ops::Mul for &Vec2 {
+impl ops::Mul for Vec2 {
     type Output = Vec2;
 
     fn mul(self, rhs: Self) -> Self::Output {
@@ -247,7 +247,7 @@ impl ops::Mul for &Vec2 {
 }
 
 // Implement Div operator
-impl ops::Div for &Vec2 {
+impl ops::Div for Vec2 {
     type Output = Vec2;
 
     fn div(self, rhs: Self) -> Self::Output {
@@ -259,7 +259,7 @@ impl ops::Div for &Vec2 {
 }
 
 // Implement Add operator for scalar
-impl ops::Add<f64> for &Vec2 {
+impl ops::Add<f64> for Vec2 {
     type Output = Vec2;
 
     fn add(self, rhs: f64) -> Self::Output {
@@ -271,7 +271,7 @@ impl ops::Add<f64> for &Vec2 {
 }
 
 // Implement Sub operator for scalar
-impl ops::Sub<f64> for &Vec2 {
+impl ops::Sub<f64> for Vec2 {
     type Output = Vec2;
 
     fn sub(self, rhs: f64) -> Self::Output {
@@ -283,7 +283,7 @@ impl ops::Sub<f64> for &Vec2 {
 }
 
 // Implement Mul operator for scalar
-impl ops::Mul<f64> for &Vec2 {
+impl ops::Mul<f64> for Vec2 {
     type Output = Vec2;
 
     fn mul(self, rhs: f64) -> Self::Output {
@@ -295,7 +295,7 @@ impl ops::Mul<f64> for &Vec2 {
 }
 
 // Implement Div operator for scalar
-impl ops::Div<f64> for &Vec2 {
+impl ops::Div<f64> for Vec2 {
     type Output = Vec2;
 
     fn div(self, rhs: f64) -> Self::Output {
@@ -308,74 +308,74 @@ impl ops::Div<f64> for &Vec2 {
 
 // Implement float trait
 //
-// Implement Add by vector3 for f64
-impl ops::Add<&Vec3> for f64 {
+// Implement Add by Vec3 for f64
+impl ops::Add<Vec3> for f64 {
     type Output = Vec3;
 
-    fn add(self, rhs: &Vec3) -> Self::Output {
+    fn add(self, rhs: Vec3) -> Self::Output {
         rhs + self
     }
 }
 
-// Implement Sub by vector3 for f64
-impl ops::Sub<&Vec3> for f64 {
+// Implement Sub by Vec3 for f64
+impl ops::Sub<Vec3> for f64 {
     type Output = Vec3;
 
-    fn sub(self, rhs: &Vec3) -> Self::Output {
+    fn sub(self, rhs: Vec3) -> Self::Output {
         rhs - self
     }
 }
 
-// Implement Mul by vector3 for f64
-impl ops::Mul<&Vec3> for f64 {
+// Implement Mul by Vec3 for f64
+impl ops::Mul<Vec3> for f64 {
     type Output = Vec3;
 
-    fn mul(self, rhs: &Vec3) -> Self::Output {
+    fn mul(self, rhs: Vec3) -> Self::Output {
         rhs * self
     }
 }
 
-// Implement Div by vector3 for f64
-impl ops::Div<&Vec3> for f64 {
+// Implement Div by Vec3 for f64
+impl ops::Div<Vec3> for f64 {
     type Output = Vec3;
 
-    fn div(self, rhs: &Vec3) -> Self::Output {
+    fn div(self, rhs: Vec3) -> Self::Output {
         rhs / self
     }
 }
 
-// Implement Add by vector2 for f64
-impl ops::Add<&Vec2> for f64 {
+// Implement Add by Vec2 for f64
+impl ops::Add<Vec2> for f64 {
     type Output = Vec2;
 
-    fn add(self, rhs: &Vec2) -> Self::Output {
+    fn add(self, rhs: Vec2) -> Self::Output {
         rhs + self
     }
 }
 
-// Implement Sub by vector2 for f64
-impl ops::Sub<&Vec2> for f64 {
+// Implement Sub by Vec2 for f64
+impl ops::Sub<Vec2> for f64 {
     type Output = Vec2;
 
-    fn sub(self, rhs: &Vec2) -> Self::Output {
+    fn sub(self, rhs: Vec2) -> Self::Output {
         rhs - self
     }
 }
 
-// Implement Mul by vector2 for f64
-impl ops::Mul<&Vec2> for f64 {
+// Implement Mul by Vec2 for f64
+impl ops::Mul<Vec2> for f64 {
     type Output = Vec2;
 
-    fn mul(self, rhs: &Vec2) -> Self::Output {
+    fn mul(self, rhs: Vec2) -> Self::Output {
         rhs * self
     }
 }
 
-// Implement Div by vector2 for f64
-impl ops::Div<&Vec2> for f64 {
+// Implement Div by Vec2 for f64
+impl ops::Div<Vec2> for f64 {
     type Output = Vec2;
 
-    fn div(self, rhs: &Vec2) -> Self::Output {
+    fn div(self, rhs: Vec2) -> Self::Output {
         rhs / self
     }
 }
