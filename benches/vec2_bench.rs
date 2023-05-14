@@ -22,7 +22,18 @@ pub fn vec2_add(c: &mut Criterion) {
     let a_vec = black_box(Vec2::new(1.,2.));
     let b_vec = black_box(Vec2::new(2.,3.));
 
-    c.bench_function("vec2 add", |b| b.iter(|| &a_vec + &b_vec));
+    c.bench_function("vec2 add", |b| b.iter(|| a_vec + b_vec));
+}
+
+// Becnhmrk the add and the dot operation
+pub fn vec2_add_dot(c: &mut Criterion) {
+    let a_vec = black_box(Vec2::new(1.,2.));
+    let b_vec = black_box(Vec2::new(2.,3.));
+
+    c.bench_function("vec2 add + dot", |b| b.iter(|| {
+        let res = a_vec + b_vec;
+        Vec2::dot(&a_vec, &res)
+    }));
 }
 
 // Create the benchmarks group
@@ -32,6 +43,7 @@ criterion_group!(
     vec2_normilze,
     vec2_dot,
     vec2_add,
+    vec2_add_dot,
 );
 
 // Run the benchmarks
