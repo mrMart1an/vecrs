@@ -170,3 +170,15 @@ impl ops::Div<Vec2> for f64 {
         rhs / self
     }
 }
+
+// Implement Vec2 Neg operator
+impl ops::Neg for Vec2  {
+    type Output = Vec2;
+
+    fn neg(self) -> Self::Output {
+        Self::Output {
+            x: -self.x,
+            y: -self.y,
+        }
+    }
+}

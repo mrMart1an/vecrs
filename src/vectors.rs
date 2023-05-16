@@ -109,7 +109,7 @@ impl Vec3 {
     pub fn cross(va: &Self, vb: &Self) -> Self {
         Self { 
             x: (va.y * vb.z) - (va.z * vb.y), 
-            y: - (va.x * vb.z) + (va.z * vb.x), 
+            y: (va.x * vb.z) - (va.z * vb.x), 
             z: (va.x * vb.y) - (va.y * vb.x),
         }
     }
