@@ -195,3 +195,16 @@ impl ops::Div<Vec4> for f64 {
     }
 }
 
+// Implement Vec4 Neg operator
+impl ops::Neg for Vec4  {
+    type Output = Vec4;
+
+    fn neg(self) -> Self::Output {
+        Self::Output {
+            x: -self.x,
+            y: -self.y,
+            z: -self.z,
+            w: -self.w,
+        }
+    }
+}
