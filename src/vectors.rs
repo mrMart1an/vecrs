@@ -102,6 +102,77 @@ impl std::fmt::Debug for Vec2 {
     }
 }
 
+// Overloading assign operator Vec3
+//
+// Implement AddAssing operator
+impl ops::AddAssign for Vec3 {
+    fn add_assign(&mut self, rhs: Self) {
+        self.x += rhs.x;   
+        self.y += rhs.y;   
+        self.z += rhs.z;   
+    }
+}
+
+// Implement AddAssing operator
+impl ops::SubAssign for Vec3 {
+    fn sub_assign(&mut self, rhs: Self) {
+        self.x -= rhs.x;   
+        self.y -= rhs.y;   
+        self.z -= rhs.z;   
+    }
+}
+
+// Implement AddAssing operator
+impl ops::DivAssign for Vec3 {
+    fn div_assign(&mut self, rhs: Self) {
+        self.x /= rhs.x;   
+        self.y /= rhs.y;   
+        self.z /= rhs.z;   
+    }
+}
+
+// Implement AddAssing operator
+impl ops::MulAssign for Vec3 {
+    fn mul_assign(&mut self, rhs: Self) {
+        self.x *= rhs.x;   
+        self.y *= rhs.y;   
+    }
+}
+
+// Overloading assign operator Vec2
+//
+// Implement AddAssing operator
+impl ops::AddAssign for Vec2 {
+    fn add_assign(&mut self, rhs: Self) {
+        self.x += rhs.x;   
+        self.y += rhs.y;   
+    }
+}
+
+// Implement AddAssing operator
+impl ops::SubAssign for Vec2 {
+    fn sub_assign(&mut self, rhs: Self) {
+        self.x -= rhs.x;   
+        self.y -= rhs.y;   
+    }
+}
+
+// Implement AddAssing operator
+impl ops::DivAssign for Vec2 {
+    fn div_assign(&mut self, rhs: Self) {
+        self.x /= rhs.x;   
+        self.y /= rhs.y;   
+    }
+}
+
+// Implement AddAssing operator
+impl ops::MulAssign for Vec2 {
+    fn mul_assign(&mut self, rhs: Self) {
+        self.x *= rhs.x;   
+        self.y *= rhs.y;   
+    }
+}
+
 // Overloading operaor for Vec3 type
 //
 // Implement Add operator
@@ -306,7 +377,7 @@ impl ops::Div<f64> for Vec2 {
     }
 }
 
-// Implement float trait
+// Implement float trait Vec3
 //
 // Implement Add by Vec3 for f64
 impl ops::Add<Vec3> for f64 {
@@ -344,6 +415,8 @@ impl ops::Div<Vec3> for f64 {
     }
 }
 
+// Implement float trait Vec2
+//
 // Implement Add by Vec2 for f64
 impl ops::Add<Vec2> for f64 {
     type Output = Vec2;
