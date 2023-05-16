@@ -1,4 +1,13 @@
-// Define the Vec3 and Vec2 structs
+/// Define the Vec4 struct
+#[derive(Copy, Clone, PartialEq)]
+pub struct Vec4 {
+    pub x: f64,
+    pub y: f64,
+    pub z: f64,
+    pub w: f64,
+}
+
+/// Define the Vec3 struct
 #[derive(Copy, Clone, PartialEq)]
 pub struct Vec3 {
     pub x: f64,
@@ -6,10 +15,56 @@ pub struct Vec3 {
     pub z: f64,
 }
 
+/// Define the Vec2 struct
 #[derive(Copy, Clone, PartialEq)]
 pub struct Vec2 {
     pub x: f64,
     pub y: f64,
+}
+
+// Implement constructor and uitility functions for Vec3
+impl Vec4 {
+    /// Construct a new Vec4 with the given coordinates
+    /// Take 4 float64 as input
+    pub fn new(x: f64, y: f64, z: f64, w: f64) -> Self {
+        Self { x, y, z, w }
+    }
+
+    /// Construct a new Vec4 from a given Vec3 and a scalar for the z axis
+    /// Take as input a reference to a Vec2 and a float64
+    pub fn from_vec3(v: Vec3, w: f64) -> Self {
+        Self { 
+            x: v.x,
+            y: v.y,
+            z: v.z,
+            w
+        }
+    }
+
+    /// Calculate the squared lenght of the vector and return a float
+    pub fn lenght_sq(&self) -> f64 {
+        self.x.powi(2) + self.y.powi(2) + self.z.powi(2) + self.w.powi(2)
+    }
+
+    /// Calculate the lenght of the vector and return a float
+    pub fn lenght(&self) -> f64 {
+        self.lenght_sq().sqrt()
+    }
+
+    /// Return the normalized vector
+    /// (Keep direction but make the lenght 1.0)
+    pub fn normalize(self) -> Self {
+        self / self.lenght()
+    }
+
+    /// Return the dot product of two vector
+    /// Take a reference to two vectors as input
+    pub fn dot(va: &Self, vb: &Self) -> f64 {
+        (va.x * vb.x) + 
+        (va.y * vb.y) +
+        (va.z * vb.z) +
+        (va.w * vb.w)
+    }
 }
 
 // Implement constructor and uitility functions for Vec3
