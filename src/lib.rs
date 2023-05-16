@@ -1,5 +1,4 @@
 pub mod vectors;
-mod vec2ops;
-mod vec3ops;
+mod vec_ops;
 
 pub mod matrices;
