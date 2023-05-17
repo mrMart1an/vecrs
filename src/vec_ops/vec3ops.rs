@@ -184,7 +184,7 @@ impl ops::Div<Vec3> for f64 {
 }
 
 // Implement Vec3 Neg operator
-impl ops::Neg for Vec3  {
+impl ops::Neg for Vec3 {
     type Output = Vec3;
 
     fn neg(self) -> Self::Output {
