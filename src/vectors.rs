@@ -84,10 +84,15 @@ impl Vec3 {
             z,
         }
     }
-
+    
+    /// Calculate the squared lenght of the vector and return a float
+    pub fn lenght_sq(&self) -> f64 {
+        self.x.powi(2) + self.y.powi(2) + self.z.powi(2)
+    }
+    
     /// Calculate the lenght of the vector and return a float
     pub fn lenght(&self) -> f64 {
-        (self.x.powi(2) + self.y.powi(2) + self.z.powi(2)).sqrt()
+        self.lenght_sq().sqrt()
     }
 
     /// Return the normalized vector
@@ -121,10 +126,15 @@ impl Vec2 {
     pub fn new(x: f64, y: f64) -> Self {
         Self { x, y }
     }
+    
+    /// Calculate the squared lenght of the vector and return a float
+    pub fn lenght_sq(&self) -> f64 {
+        self.x.powi(2) + self.y.powi(2)
+    }
 
     /// Calculate the lenght of the vector and return a float
     pub fn lenght(&self) -> f64 {
-        (self.x.powi(2) + self.y.powi(2)).sqrt()
+        self.lenght_sq().sqrt()
     }
 
     /// Return the normalized vector
