@@ -1,4 +1,5 @@
 use std::ops;
+use crate::vectors::{Vec2, Vec3, Vec4};
 
 // Define the 2 by 2 matrix struct
 #[derive(Debug, Default, PartialEq)]
@@ -34,6 +35,15 @@ impl Mat2x2 {
         ])
     }
 
+    /// Perform the matrix multiplication between a Vec2 and a Mat2x2
+    /// and return the resulting vector2
+    pub fn dot_vec(v: &Vec2, m: &Mat2x2) -> Vec2 {
+        Vec2::new(
+            v.x*m[0][0] + v.y*m[1][0],
+            v.x*m[0][1] + v.y*m[1][1],
+        )
+    }
+    
     /// Perform the matrix multiplication of two matrices
     /// and return the reuslt as a new matrix
     pub fn dot(a: &Mat2x2, b: &Mat2x2) -> Self {
@@ -47,8 +57,8 @@ impl Mat2x2 {
     }
 
 
-    /// Performe the matrix multiplication of two matrices
-    /// and save the result in a mutable referecete to Mat2x2
+    /// Perform the matrix multiplication of two matrices
+    /// and save the result in a mutable reference to Mat2x2
     pub fn dot_ref(a: &Mat2x2, b: &Mat2x2, out: &mut Mat2x2) {
         out[0][0] = a[0][0]*b[0][0] + a[0][1]*b[1][0];
         out[0][1] = a[0][0]*b[0][1] + a[0][1]*b[1][1];
@@ -75,6 +85,16 @@ impl Mat3x3 {
         ])
     }
     
+    /// Perform the matrix multiplication between a Vec3 and a Mat3x3
+    /// and return the resulting vector3
+    pub fn dot_vec(v: &Vec3, m: &Mat3x3) -> Vec3 {
+        Vec3::new(
+            v.x*m[0][0] + v.y*m[1][0] + v.z*m[2][0],
+            v.x*m[0][1] + v.y*m[1][1] + v.z*m[2][1],
+            v.x*m[0][2] + v.y*m[1][2] + v.z*m[2][2],
+        )
+    }
+
     /// Perform the matrix multiplication of two matrices
     /// and return the reuslt as a new matrix
     pub fn dot(a: &Mat3x3, b: &Mat3x3) -> Self {
@@ -94,8 +114,8 @@ impl Mat3x3 {
     }
 
 
-    /// Performe the matrix multiplication of two matrices
-    /// and save the result in a mutable referecete to Mat3x3
+    /// Perform the matrix multiplication of two matrices
+    /// and save the result in a mutable reference to Mat3x3
     pub fn dot_ref(a: &Mat3x3, b: &Mat3x3, out: &mut Mat3x3) {
         out[0][0] = a[0][0]*b[0][0] + a[0][1]*b[1][0] + a[0][2]*b[2][0];
         out[0][1] = a[0][0]*b[0][1] + a[0][1]*b[1][1] + a[0][2]*b[2][1];
@@ -128,10 +148,22 @@ impl Mat4x4 {
             [0., 0., 0., 1.],
         ])
     }
+    
+    /// Perform the matrix multiplication between a Vec4 and a Mat4x4
+    /// and return the resulting vector4
+    pub fn dot_vec(v: &Vec4, m: &Mat4x4) -> Vec4 {
+        Vec4::new(
+            v.x*m[0][0] + v.y*m[1][0] + v.z*m[2][0] + v.w*m[3][0],
+            v.x*m[0][1] + v.y*m[1][1] + v.z*m[2][1] + v.w*m[3][1],
+            v.x*m[0][2] + v.y*m[1][2] + v.z*m[2][2] + v.w*m[3][2],
+            v.x*m[0][3] + v.y*m[1][3] + v.z*m[2][3] + v.w*m[3][3],
+        )
+    }
 
     /// Perform the matrix multiplication of two matrices
     /// and return the reuslt as a new matrix
     pub fn dot(a: &Mat4x4, b: &Mat4x4) -> Self {
+        // Abomination but faster than a for loop
         Self::new([[
             a[0][0]*b[0][0] + a[0][1]*b[1][0] + a[0][2]*b[2][0] + a[0][3]*b[3][0],
             a[0][0]*b[0][1] + a[0][1]*b[1][1] + a[0][2]*b[2][1] + a[0][3]*b[3][1],
@@ -156,8 +188,8 @@ impl Mat4x4 {
     }
 
 
-    /// Performe the matrix multiplication of two matrices
-    /// and save the result in a mutable referecete to Mat4x4
+    /// Perform the matrix multiplication of two matrices
+    /// and save the result in a mutable reference to Mat4x4
     pub fn dot_ref(a: &Mat4x4, b: &Mat4x4, out: &mut Mat4x4) {
         // Abomination but faster than a for loop
         out[0][0] = a[0][0]*b[0][0] + a[0][1]*b[1][0] + a[0][2]*b[2][0] + a[0][3]*b[3][0];
