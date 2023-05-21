@@ -1,5 +1,5 @@
 /// Define the Vec4 struct
-#[derive(Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq, Default)]
 pub struct Vec4 {
     pub x: f64,
     pub y: f64,
@@ -8,7 +8,7 @@ pub struct Vec4 {
 }
 
 /// Define the Vec3 struct
-#[derive(Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq, Default)]
 pub struct Vec3 {
     pub x: f64,
     pub y: f64,
@@ -16,7 +16,7 @@ pub struct Vec3 {
 }
 
 /// Define the Vec2 struct
-#[derive(Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq, Default)]
 pub struct Vec2 {
     pub x: f64,
     pub y: f64,
