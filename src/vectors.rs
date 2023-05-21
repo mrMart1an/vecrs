@@ -22,7 +22,7 @@ pub struct Vec2 {
     pub y: f64,
 }
 
-// Implement constructor and uitility functions for Vec3
+// Implement constructor and uitility functions for Vec4
 impl Vec4 {
     /// Construct a new Vec4 with the given coordinates
     /// Take 4 float64 as input
@@ -120,7 +120,7 @@ impl Vec3 {
     }
 }
 
-// Implement constructor and uitility functions for Vec3
+// Implement constructor and uitility functions for Vec2
 impl Vec2 {
     /// Construct a new Vec3 with the given coordinates
     pub fn new(x: f64, y: f64) -> Self {
@@ -153,6 +153,13 @@ impl Vec2 {
 
 // Debug trait Implementation
 //
+// Implementing Vec4 Debug trait
+impl std::fmt::Debug for Vec4 {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "[ {}, {}, {}, {} ]", self.x, self.y, self.z, self.w)
+    }
+}
+
 // Implementing Vec3 Debug trait
 impl std::fmt::Debug for Vec3 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -160,7 +167,7 @@ impl std::fmt::Debug for Vec3 {
     }
 }
 
-// Implementing Vec3 Debug trait
+// Implementing Vec2 Debug trait
 impl std::fmt::Debug for Vec2 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "[ {}, {} ]", self.x, self.y)
