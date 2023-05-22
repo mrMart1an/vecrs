@@ -1,5 +1,43 @@
 use vecrs::vectors::{Vec2, Vec3, Vec4};
 
+// Test vector dot product
+//
+// Test Vec2 dot product
+#[test]
+fn vec2_dot() {
+    let a = Vec2::new(4., 6.);
+    let b = Vec2::new(2., 3.);
+
+    let actual = 26f64;
+
+    // Check the result
+    assert_eq!(actual, Vec2::dot(&a, &b));
+}
+
+// Test Vec3 dot product
+#[test]
+fn vec3_dot() {
+    let a = Vec3::new(4., 6., 8.);
+    let b = Vec3::new(2., 3., 4.);
+
+    let actual = 58f64;
+
+    // Check the result
+    assert_eq!(actual, Vec3::dot(&a, &b));
+}
+
+// Test Vec4 dot product
+#[test]
+fn vec4_dot() {
+    let a = Vec4::new(4., 6., 8., 10.);
+    let b = Vec4::new(2., 3., 4., 5.);
+
+    let actual = 108f64;
+
+    // Check the result
+    assert_eq!(actual, Vec4::dot(&a, &b));
+}
+
 // Test vector by vector operators
 //
 // Test Vec2 by Vec2 operators
@@ -152,5 +190,3 @@ fn vec4_assign_ops() {
     assert_eq!(Vec4::new(8., 18., 32., 50.), c, "mul ops");
     assert_eq!(Vec4::new(2., 2., 2., 2.), d, "div ops");
 }
-
-
