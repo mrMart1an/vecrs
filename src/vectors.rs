@@ -1,3 +1,6 @@
+use rand::Rng;
+use rand::thread_rng;
+
 /// Define the Vec4 struct
 #[derive(Copy, Clone, PartialEq, Default)]
 pub struct Vec4 {
@@ -37,7 +40,20 @@ impl Vec4 {
             x: v.x,
             y: v.y,
             z: v.z,
-            w
+            w,
+        }
+    }
+
+    /// Create a vector with random initialized fields
+    /// Each field is initialized with a random f64 in the specified range
+    pub fn rand(min: f64, max: f64) -> Self {
+        let mut rng = thread_rng();
+
+        Self { 
+            x: rng.gen_range(min..=max),
+            y: rng.gen_range(min..=max),
+            z: rng.gen_range(min..=max),
+            w: rng.gen_range(min..=max),
         }
     }
 
@@ -85,6 +101,18 @@ impl Vec3 {
         }
     }
     
+    /// Create a vector with random initialized fields
+    /// Each field is initialized with a random f64 in the specified range
+    pub fn rand(min: f64, max: f64) -> Self {
+        let mut rng = thread_rng();
+
+        Self { 
+            x: rng.gen_range(min..=max),
+            y: rng.gen_range(min..=max),
+            z: rng.gen_range(min..=max),
+        }
+    }
+
     /// Calculate the squared lenght of the vector and return a float
     pub fn lenght_sq(&self) -> f64 {
         self.x.powi(2) + self.y.powi(2) + self.z.powi(2)
@@ -126,7 +154,18 @@ impl Vec2 {
     pub fn new(x: f64, y: f64) -> Self {
         Self { x, y }
     }
-    
+
+    /// Create a vector with random initialized fields
+    /// Each field is initialized with a random f64 in the specified range
+    pub fn rand(min: f64, max: f64) -> Self {
+        let mut rng = thread_rng();
+
+        Self { 
+            x: rng.gen_range(min..=max),
+            y: rng.gen_range(min..=max),
+        }
+    }
+
     /// Calculate the squared lenght of the vector and return a float
     pub fn lenght_sq(&self) -> f64 {
         self.x.powi(2) + self.y.powi(2)
