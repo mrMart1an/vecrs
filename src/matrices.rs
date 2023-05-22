@@ -237,7 +237,6 @@ impl Mat4x4 {
         out[3][3] = a[3][0]*b[0][3] + a[3][1]*b[1][3] + a[3][2]*b[2][3] + a[3][3]*b[3][3];
 
     }
-
 }
 
 // Index operator implementations
