@@ -35,6 +35,14 @@ impl Mat2x2 {
         ])
     }
 
+    /// Return the transposed matrix
+    pub fn transpose(&self) -> Self {
+        Self::new([
+            [self[0][0], self[1][0]],
+            [self[0][1], self[1][1]],
+        ])
+    }
+
     /// Perform the matrix multiplication between a Vec2 and a Mat2x2
     /// and return the resulting vector2
     pub fn dot_vec(v: &Vec2, m: &Mat2x2) -> Vec2 {
@@ -55,7 +63,6 @@ impl Mat2x2 {
             a[1][0]*b[0][1] + a[1][1]*b[1][1],
         ]])
     }
-
 
     /// Perform the matrix multiplication of two matrices
     /// and save the result in a mutable reference to Mat2x2
@@ -85,6 +92,15 @@ impl Mat3x3 {
         ])
     }
     
+    /// Return the transposed matrix
+    pub fn transpose(&self) -> Self {
+        Self::new([
+            [self[0][0], self[1][0], self[2][0]],
+            [self[0][1], self[1][1], self[2][1]],
+            [self[0][2], self[1][2], self[2][2]],
+        ])
+    }
+
     /// Perform the matrix multiplication between a Vec3 and a Mat3x3
     /// and return the resulting vector3
     pub fn dot_vec(v: &Vec3, m: &Mat3x3) -> Vec3 {
@@ -112,7 +128,6 @@ impl Mat3x3 {
             a[2][0]*b[0][2] + a[2][1]*b[1][2] + a[2][2]*b[2][2],
         ]])
     }
-
 
     /// Perform the matrix multiplication of two matrices
     /// and save the result in a mutable reference to Mat3x3
@@ -148,7 +163,17 @@ impl Mat4x4 {
             [0., 0., 0., 1.],
         ])
     }
-    
+        
+    /// Return the transposed matrix
+    pub fn transpose(&self) -> Self {
+        Self::new([
+            [self[0][0], self[1][0], self[2][0], self[3][0]],
+            [self[0][1], self[1][1], self[2][1], self[3][1]],
+            [self[0][2], self[1][2], self[2][2], self[3][2]],
+            [self[0][3], self[1][3], self[2][3], self[3][3]],
+        ])
+    }
+
     /// Perform the matrix multiplication between a Vec4 and a Mat4x4
     /// and return the resulting vector4
     pub fn dot_vec(v: &Vec4, m: &Mat4x4) -> Vec4 {
@@ -186,7 +211,6 @@ impl Mat4x4 {
             a[3][0]*b[0][3] + a[3][1]*b[1][3] + a[3][2]*b[2][3] + a[3][3]*b[3][3],
         ]])
     }
-
 
     /// Perform the matrix multiplication of two matrices
     /// and save the result in a mutable reference to Mat4x4
