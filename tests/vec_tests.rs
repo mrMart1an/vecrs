@@ -81,3 +81,76 @@ fn vec4_by_f64_ops() {
     assert_eq!(Vec4::new(8., 12., 16., 20.), a * b, "mul ops");
     assert_eq!(Vec4::new(2., 3., 4., 5.), a / b, "div ops");
 }
+
+// Test vector by vector operators
+//
+// Test Vec2 assign perators
+#[test]
+fn vec2_assign_ops() {
+    let rhs = Vec2::new(2., 3.);
+
+    let mut a = Vec2::new(4., 6.);
+    let mut b = Vec2::new(4., 6.);
+    let mut c = Vec2::new(4., 6.);
+    let mut d = Vec2::new(4., 6.);
+
+    // Use operators
+    a += rhs;
+    b -= rhs;
+    c *= rhs;
+    d /= rhs;
+
+    // Test operators
+    assert_eq!(Vec2::new(6., 9.), a, "add ops");
+    assert_eq!(Vec2::new(2., 3.), b, "sub ops");
+    assert_eq!(Vec2::new(8., 18.), c, "mul ops");
+    assert_eq!(Vec2::new(2., 2.), d, "div ops");
+}
+
+// Test Vec3 assign operators
+#[test]
+fn vec3_assign_ops() {
+    let rhs = Vec3::new(2., 3., 4.);
+
+    let mut a = Vec3::new(4., 6., 8.);
+    let mut b = Vec3::new(4., 6., 8.);
+    let mut c = Vec3::new(4., 6., 8.);
+    let mut d = Vec3::new(4., 6., 8.);
+
+    // Use operators
+    a += rhs;
+    b -= rhs;
+    c *= rhs;
+    d /= rhs;
+
+    // Test operators
+    assert_eq!(Vec3::new(6., 9., 12.), a, "add ops");
+    assert_eq!(Vec3::new(2., 3., 4.), b, "sub ops");
+    assert_eq!(Vec3::new(8., 18., 32.), c, "mul ops");
+    assert_eq!(Vec3::new(2., 2., 2.), d, "div ops");
+}
+
+// Test Vec4 assign operators
+#[test]
+fn vec4_assign_ops() {
+    let rhs = Vec4::new(2., 3., 4., 5.);
+
+    let mut a = Vec4::new(4., 6., 8., 10.);
+    let mut b = Vec4::new(4., 6., 8., 10.);
+    let mut c = Vec4::new(4., 6., 8., 10.);
+    let mut d = Vec4::new(4., 6., 8., 10.);
+    
+    // Use operators
+    a += rhs;
+    b -= rhs;
+    c *= rhs;
+    d /= rhs;
+
+    // Test operators
+    assert_eq!(Vec4::new(6., 9., 12., 15.), a, "add ops");
+    assert_eq!(Vec4::new(2., 3., 4., 5.), b, "sub ops");
+    assert_eq!(Vec4::new(8., 18., 32., 50.), c, "mul ops");
+    assert_eq!(Vec4::new(2., 2., 2., 2.), d, "div ops");
+}
+
+
