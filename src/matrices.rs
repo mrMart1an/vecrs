@@ -43,6 +43,11 @@ impl Mat2x2 {
         ])
     }
 
+    /// Calculate the determinant of the matrix
+    pub fn determinant(&self) -> f64 {
+        self[0][0]*self[1][1] - self[0][1]*self[1][0]
+    }
+
     /// Perform the matrix multiplication between a Vec2 and a Mat2x2
     /// and return the resulting vector2
     pub fn dot_vec(v: &Vec2, m: &Mat2x2) -> Vec2 {
@@ -99,6 +104,13 @@ impl Mat3x3 {
             [self[0][1], self[1][1], self[2][1]],
             [self[0][2], self[1][2], self[2][2]],
         ])
+    }
+
+    /// Calculate the determinant of the matrix
+    pub fn determinant(&self) -> f64 {
+        self[0][0] * (self[1][1]*self[2][2] - self[1][2]*self[2][1]) -
+        self[0][1] * (self[1][0]*self[2][2] - self[1][2]*self[2][0]) +
+        self[0][2] * (self[1][0]*self[2][1] - self[1][1]*self[2][0])
     }
 
     /// Perform the matrix multiplication between a Vec3 and a Mat3x3
@@ -172,6 +184,30 @@ impl Mat4x4 {
             [self[0][2], self[1][2], self[2][2], self[3][2]],
             [self[0][3], self[1][3], self[2][3], self[3][3]],
         ])
+    }
+
+    /// Calculate the determinant of the matrix
+    pub fn determinant(&self) -> f64 {
+        // Create an alias of the matrix
+        let m = self;
+
+        // Calculate the determinant
+        m[0][0] * (
+            m[1][1]*m[2][2]*m[3][3] + m[1][2]*m[2][3]*m[3][1] + m[1][3]*m[2][1]*m[3][2] -
+            m[1][3]*m[2][2]*m[3][1] - m[1][2]*m[2][1]*m[3][3] - m[1][1]*m[2][3]*m[3][2] 
+
+        ) - m[1][0] * (
+            m[0][1]*m[2][2]*m[3][3] + m[0][2]*m[2][3]*m[3][1] + m[0][3]*m[2][1]*m[3][2] -
+            m[0][3]*m[2][2]*m[3][1] - m[0][2]*m[2][1]*m[3][3] - m[0][1]*m[2][3]*m[3][2] 
+
+        ) + m[2][0] * (
+            m[0][1]*m[1][2]*m[3][3] + m[0][2]*m[1][3]*m[3][1] + m[0][3]*m[1][1]*m[3][2] -
+            m[0][3]*m[1][2]*m[3][1] - m[0][2]*m[1][1]*m[3][3] - m[0][1]*m[1][3]*m[3][2] 
+
+        ) - m[3][0] * (
+            m[0][1]*m[1][2]*m[2][3] + m[0][2]*m[1][3]*m[2][1] + m[0][3]*m[1][1]*m[2][2] -
+            m[0][3]*m[1][2]*m[2][1] - m[0][2]*m[1][1]*m[2][3] - m[0][1]*m[1][3]*m[2][2] 
+        )
     }
 
     /// Perform the matrix multiplication between a Vec4 and a Mat4x4

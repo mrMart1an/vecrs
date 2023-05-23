@@ -1,5 +1,46 @@
 use vecrs::matrices::{Mat2x2, Mat3x3, Mat4x4};
 
+// Test the determinant function
+//
+// Test 2x2 matrix determinant
+#[test]
+fn mat2x2_determinant() {
+    let matrix = Mat2x2::new([
+        [1., 2.],
+        [3., 4.],
+    ]);
+
+    // Test fucntion
+    assert_eq!(matrix.determinant(), -2.)
+}
+
+// Test 3x3 matrix determinant
+#[test]
+fn mat3x3_determinant() {
+let matrix = Mat3x3::new([
+        [1., 2., 3.],
+        [4., 5., 6.],
+        [7., 8., 9.],
+    ]);
+
+    // Test fucntion
+    assert_eq!(matrix.determinant(), 0.)
+}
+
+// Test 4x4 matrix determinant
+#[test]
+fn mat4x4_determinant() {
+let matrix = Mat4x4::new([
+        [1., 2., 3., 4.],
+        [5., 6., 7., 8.],
+        [9., 10., 11., 12.],
+        [13., 14., 15., 16.],
+    ]);
+
+    // Test fucntion
+    assert_eq!(matrix.determinant(), 0.)
+}
+
 // Test transpose function
 //
 // Test transpose for 2x2 matrix
