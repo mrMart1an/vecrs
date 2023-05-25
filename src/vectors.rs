@@ -81,6 +81,15 @@ impl Vec4 {
         (va.z * vb.z) +
         (va.w * vb.w)
     }
+
+    /// Return true if the difference between the values of the
+    /// two vectors is smaller than epsilon
+    pub fn relative_eq(a: Self, b: Self, epsilon: f64) -> bool {
+        (a.x - b.x).abs() <= epsilon &&
+        (a.y - b.y).abs() <= epsilon &&
+        (a.z - b.z).abs() <= epsilon &&
+        (a.w - b.w).abs() <= epsilon 
+    }
 }
 
 // Implement constructor and uitility functions for Vec3
@@ -142,9 +151,17 @@ impl Vec3 {
     pub fn cross(va: &Self, vb: &Self) -> Self {
         Self { 
             x: (va.y * vb.z) - (va.z * vb.y), 
-            y: (va.x * vb.z) - (va.z * vb.x), 
+            y: (va.z * vb.x) - (va.x * vb.z), 
             z: (va.x * vb.y) - (va.y * vb.x),
         }
+    }
+
+    /// Return true if the difference between the values of the
+    /// two vectors is smaller than epsilon
+    pub fn relative_eq(a: Self, b: Self, epsilon: f64) -> bool {
+        (a.x - b.x).abs() <= epsilon &&
+        (a.y - b.y).abs() <= epsilon &&
+        (a.z - b.z).abs() <= epsilon
     }
 }
 
@@ -187,6 +204,13 @@ impl Vec2 {
     pub fn dot(va: &Self, vb: &Self) -> f64 {
         (va.x * vb.x) + 
         (va.y * vb.y) 
+    }
+
+    /// Return true if the difference between the values of the
+    /// two vectors is smaller than epsilon
+    pub fn relative_eq(a: Self, b: Self, epsilon: f64) -> bool {
+        (a.x - b.x).abs() <= epsilon &&
+        (a.y - b.y).abs() <= epsilon 
     }
 }
 
