@@ -1,20 +1,20 @@
-use std::ops;
+use std::{ops, fmt::Debug};
 use crate::vectors::{Vec2, Vec3, Vec4};
 
 // Define the 2 by 2 matrix struct
-#[derive(Debug, Default, PartialEq)]
+#[derive(Copy, Clone, Default, PartialEq)]
 pub struct Mat2x2 {
     m: [[f64; 2]; 2],
 }
 
 // Define the 3 by 3 matrix struct
-#[derive(Debug, Default, PartialEq)]
+#[derive(Copy, Clone, Default, PartialEq)]
 pub struct Mat3x3 {
     m: [[f64; 3]; 3],
 }
 
 // Define the 4 by 4 matrix struct
-#[derive(Debug, Default, PartialEq)]
+#[derive(Copy, Clone, Default, PartialEq)]
 pub struct Mat4x4 {
     m: [[f64; 4]; 4],
 }
@@ -48,6 +48,88 @@ impl Mat2x2 {
         self[0][0]*self[1][1] - self[0][1]*self[1][0]
     }
 
+    /// Return the inverse of the matrix if it exist
+    /// Return None otherwise
+    /// Uses the Gauss-Jordan Method
+    pub fn inverse(&self) -> Option<Mat2x2> {
+        let mut output = Self::indentity();
+        let mut input = *self;
+
+        // Find the right pivot points
+        for pivot_i in 0..2 {
+            let mut pivot_v = input[pivot_i][pivot_i];
+            
+            // If the pivot is equal to 0 swap rows to
+            // the one with the highest abs
+            if pivot_v == 0. {
+                // Find the index to the row to swap
+                let mut highest_i: usize = 0;
+
+                for row_i in 0..2 {
+                    if input[row_i][pivot_i].abs() >= input[highest_i][pivot_i].abs() {
+                        highest_i = row_i;
+                    }
+                }
+
+                // If no new pivot point could be found return None
+                pivot_v = input[highest_i][pivot_i]; 
+                if pivot_v == 0. {
+                    return None;
+                } else {
+                    // If a new pivot point is found swap the pivot row
+                    // with the highest row in both input and output matrix
+                    input.m.swap(pivot_i, highest_i);
+                    output.m.swap(pivot_i, highest_i);
+                }
+            }
+        }
+
+        // Eliminate the values under the pivot point
+        let k = input[1][0] / input[0][0];
+
+        // Run row operation on input matrix
+        input[1][0] -= 0.;
+        input[1][1] -= k * input[0][1];
+        // Run row operation on ouptut matrix
+        output[1][0] -= k * output[0][0];
+        output[1][1] -= k * output[0][1];
+
+        // Scale all pivot coefficient to 1.0
+        for row_i in 0..2 {
+            let k = input[row_i][row_i];
+        
+            // Run row operation on input matrix
+            input[row_i][0] /= k;
+            input[row_i][1] /= k;
+            // Run row operation on ouptut matrix
+            output[row_i][0] /= k;
+            output[row_i][1] /= k;
+        }
+
+        // Eliminate the values under the pivot point
+        let k = input[0][1];
+
+        // Run row operation on input matrix
+        //input[0][0] -= input[1][0] * k;
+        //input[0][1] -= input[1][1] * k;
+        // Run row operation on ouptut matrix
+        output[0][0] -= output[1][0] * k;
+        output[0][1] -= output[1][1] * k;
+
+        // Check the output matrix for invalid result
+        // (NaN values, inf values)
+        for x in 0..2 {
+            for y in 0..2 {
+                if !output[x][y].is_finite() {
+                    return None;
+                }
+            }
+        }
+        
+        // If the result is valid retun it
+        Some(output)
+    }
+
     /// Perform the matrix multiplication between a Vec2 and a Mat2x2
     /// and return the resulting vector2
     pub fn dot_vec(v: &Vec2, m: &Mat2x2) -> Vec2 {
@@ -77,6 +159,24 @@ impl Mat2x2 {
 
         out[1][0] = a[1][0]*b[0][0] + a[1][1]*b[1][0];
         out[1][1] = a[1][0]*b[0][1] + a[1][1]*b[1][1];
+    }
+
+    /// Return true if the difference between the values of the
+    /// two matrices is smaller than epsilon
+    pub fn relative_eq(a: Mat2x2, b: Mat2x2, epsilon: f64) -> bool {
+        // Check if all value are approximately equal
+        for x in 0..2 {
+            for y in 0..2 {
+                if !((a[x][y] - b[x][y]).abs() <= epsilon) {
+                    // If two value differ more than epsilon
+                    // return false
+                    return false;
+                }
+            }
+        }
+
+        // If all checks were successful return true
+        true
     }
 }
 
@@ -155,6 +255,24 @@ impl Mat3x3 {
         out[2][0] = a[2][0]*b[0][0] + a[2][1]*b[1][0] + a[2][2]*b[2][0];
         out[2][1] = a[2][0]*b[0][1] + a[2][1]*b[1][1] + a[2][2]*b[2][1];
         out[2][2] = a[2][0]*b[0][2] + a[2][1]*b[1][2] + a[2][2]*b[2][2];
+    }
+    
+    /// Return true if the difference between the values of the
+    /// two matrices is smaller than epsilon
+    pub fn relative_eq(a: Mat2x2, b: Mat2x2, epsilon: f64) -> bool {
+        // Check if all value are approximately equal
+        for x in 0..3 {
+            for y in 0..3 {
+                if !((a[x][y] - b[x][y]).abs() <= epsilon) {
+                    // If two value differ more than epsilon
+                    // return false
+                    return false;
+                }
+            }
+        }
+
+        // If all checks were successful return true
+        true
     }
 }
 
@@ -272,6 +390,62 @@ impl Mat4x4 {
         out[3][2] = a[3][0]*b[0][2] + a[3][1]*b[1][2] + a[3][2]*b[2][2] + a[3][3]*b[3][2];
         out[3][3] = a[3][0]*b[0][3] + a[3][1]*b[1][3] + a[3][2]*b[2][3] + a[3][3]*b[3][3];
 
+    }   
+
+    /// Return true if the difference between the values of the
+    /// two matrices is smaller than epsilon
+    pub fn relative_eq(a: Mat2x2, b: Mat2x2, epsilon: f64) -> bool {
+        // Check if all value are approximately equal
+        for x in 0..4 {
+            for y in 0..4 {
+                if !((a[x][y] - b[x][y]).abs() <= epsilon) {
+                    // If two value differ more than epsilon
+                    // return false
+                    return false;
+                }
+            }
+        }
+
+        // If all checks were successful return true
+        true
+    }
+}
+
+// Implement Debug trait
+// 
+// Implement the Debug trait for Mat2x2
+impl Debug for Mat2x2 {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, 
+            "\n{:?}\n{:?}",
+            self[0],
+            self[1],
+        )    
+    }
+}
+
+// Implement the Debug trait for Mat3x3
+impl Debug for Mat3x3 {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, 
+            "\n{:?}\n{:?}\n{:?}",
+            self[0],
+            self[1],
+            self[2],
+        )    
+    }
+}
+
+// Implement the Debug trait for Mat4x4
+impl Debug for Mat4x4 {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, 
+            "\n{:?}\n{:?}\n{:?}\n{:?}",
+            self[0],
+            self[1],
+            self[2],
+            self[4],
+        )    
     }
 }
 

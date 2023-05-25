@@ -1,5 +1,42 @@
 use vecrs::matrices::{Mat2x2, Mat3x3, Mat4x4};
 
+// Test the matrix inversion
+//
+// Test matrix inversion for 2x2 matrix
+#[test]
+fn mat2x2_inverse_fails() {
+    // Test fail cases
+    let matrix = Mat2x2::new([
+        [2., 2.],
+        [2., 2.],
+    ]);
+    assert_eq!(matrix.inverse(), None);
+
+    let matrix = Mat2x2::new([
+        [0., 3.],
+        [0., 2.],
+    ]);
+    assert_eq!(matrix.inverse(), None);
+
+    let matrix = Mat2x2::new([
+        [0., 0.],
+        [3., 2.],
+    ]);
+    assert_eq!(matrix.inverse(), None);
+
+    let matrix = Mat2x2::new([
+        [3., 2.],
+        [0., 0.],
+    ]);
+    assert_eq!(matrix.inverse(), None);
+
+    let matrix = Mat2x2::new([
+        [2., 0.],
+        [3., 0.],
+    ]);
+    assert_eq!(matrix.inverse(), None);
+}
+
 // Test the determinant function
 //
 // Test 2x2 matrix determinant
