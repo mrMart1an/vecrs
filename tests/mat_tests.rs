@@ -37,6 +37,156 @@ fn mat2x2_inverse_fails() {
     assert_eq!(matrix.inverse(), None);
 }
 
+#[test]
+fn mat2x2_inverse() {
+    let identity = Mat2x2::identity();
+
+    // Test cases
+    let matrix = Mat2x2::new([
+        [2., 5.],
+        [9., 7.],
+    ]);
+    let test_id = Mat2x2::dot(&matrix.inverse().unwrap(), &matrix);
+    assert!(Mat2x2::relative_eq(test_id, identity, 1e9));
+    
+    // Test cases
+    let matrix = Mat2x2::new([
+        [35., 0.],
+        [9., 32.],
+    ]);
+    let test_id = Mat2x2::dot(&matrix.inverse().unwrap(), &matrix);
+    assert!(Mat2x2::relative_eq(test_id, identity, 1e9));
+
+    // Test cases
+    let matrix = Mat2x2::new([
+        [2., 5.],
+        [9., 0.],
+    ]);
+    let test_id = Mat2x2::dot(&matrix.inverse().unwrap(), &matrix);
+    assert!(Mat2x2::relative_eq(test_id, identity, 1e9));
+
+    // Test cases
+    let matrix = Mat2x2::new([
+        [0., 4.3],
+        [67., 7.],
+    ]);
+    let test_id = Mat2x2::dot(&matrix.inverse().unwrap(), &matrix);
+    assert!(Mat2x2::relative_eq(test_id, identity, 1e9));
+}
+
+// Test the matrix inversion
+//
+// Test matrix inversion for 3x3 matrix#[test]
+#[test]
+fn mat3x3_inverse_fails() {
+    // Test fail cases
+    let matrix = Mat3x3::new([
+        [1., 2., 3.],
+        [4., 5., 6.],
+        [7., 8., 9.],
+    ]);
+    assert_eq!(matrix.inverse(), None);
+
+    let matrix = Mat3x3::new([
+        [0.,5.,8.],
+        [0.,2.,6.],
+        [0.,4.,1.],
+    ]);
+    assert_eq!(matrix.inverse(), None);
+
+    let matrix = Mat3x3::new([
+        [4.,0.,8.],
+        [4.,0.,6.],
+        [9.,0.,0.],
+    ]);
+    assert_eq!(matrix.inverse(), None);
+}
+
+#[test]
+fn mat3x3_inverse() {
+    let identity = Mat3x3::identity();
+
+    // Test cases
+    let matrix = Mat3x3::new([
+        [7.,5.,8.],
+        [3.,2.,6.],
+        [6.,4.,1.],
+    ]);
+    let test_id = Mat3x3::dot(&matrix.inverse().unwrap(), &matrix);
+    assert!(Mat3x3::relative_eq(test_id, identity, 1e9));
+
+    let matrix = Mat3x3::new([
+        [6.,5.,32.],
+        [32.,2.,6.],
+        [8.,320.,3.],
+    ]);
+    let test_id = Mat3x3::dot(&matrix.inverse().unwrap(), &matrix);
+    assert!(Mat3x3::relative_eq(test_id, identity, 1e9));
+    
+    let matrix = Mat3x3::new([
+        [5.,5.,7.],
+        [0.,19.,6.],
+        [2.,4.,0.],
+    ]);
+    let test_id = Mat3x3::dot(&matrix.inverse().unwrap(), &matrix);
+    assert!(Mat3x3::relative_eq(test_id, identity, 1e9));
+    
+    let matrix = Mat3x3::new([
+        [6.,21.,8.],
+        [3.,0.,8.],
+        [12.,0.,1.],
+    ]);
+    let test_id = Mat3x3::dot(&matrix.inverse().unwrap(), &matrix);
+    assert!(Mat3x3::relative_eq(test_id, identity, 1e9));
+}
+
+// Test the matrix inversion
+//
+// Test matrix inversion for 3x3 matrix#[test]
+#[test]
+fn mat4x4_inverse_fails() {
+    // Test fail cases
+    let matrix = Mat4x4::new([
+        [1., 2., 3., 4.],
+        [5., 6., 7., 8.],
+        [9., 10., 11., 12.],
+        [13., 14., 15., 16.],
+    ]);
+    assert_eq!(matrix.inverse(), None);
+
+    let matrix = Mat4x4::new([
+        [0.,5.,8.,4.],
+        [0.,2.,6.,6.],
+        [0.,4.,1.,1.],
+        [0.,8.,2.,5.],
+    ]);
+    assert_eq!(matrix.inverse(), None);
+}
+
+#[test]
+fn mat4x4_inverse() {
+    let identity = Mat4x4::identity();
+
+    // Test cases
+    let matrix = Mat4x4::new([
+        [7.,5.,8.,4.],
+        [3.,2.,6.,6.],
+        [6.,4.,1.,1.],
+        [3.,8.,2.,5.],
+    ]);
+    let test_id = Mat4x4::dot(&matrix.inverse().unwrap(), &matrix);
+    assert!(Mat4x4::relative_eq(test_id, identity, 1e9));
+
+    let matrix = Mat4x4::new([
+        [7.,5.,8.,4.],
+        [34.,2.,6.,2323.],
+        [6.,0.,0.,1.],
+        [33.,8.,2.,35.],
+    ]);
+    let test_id = Mat4x4::dot(&matrix.inverse().unwrap(), &matrix);
+    assert!(Mat4x4::relative_eq(test_id, identity, 1e9));
+}
+
 // Test the determinant function
 //
 // Test 2x2 matrix determinant
