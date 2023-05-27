@@ -28,7 +28,7 @@ impl Mat2x2 {
     }
 
     /// Create a 3 by 3 identity matrix
-    pub fn indentity() -> Self {
+    pub fn identity() -> Self {
         Self::new([
             [1., 0.],
             [0., 1.],
@@ -51,8 +51,8 @@ impl Mat2x2 {
     /// Return the inverse of the matrix if it exist
     /// Return None otherwise
     /// Uses the Gauss-Jordan Method
-    pub fn inverse(&self) -> Option<Mat2x2> {
-        let mut output = Self::indentity();
+    pub fn inverse(&self) -> Option<Self> {
+        let mut output = Self::identity();
         let mut input = *self;
 
         // Find the right pivot points
@@ -95,23 +95,20 @@ impl Mat2x2 {
         output[1][1] -= k * output[0][1];
 
         // Scale all pivot coefficient to 1.0
-        for row_i in 0..2 {
-            let k = input[row_i][row_i];
+        for pivot_i in 0..2 {
+            let k = input[pivot_i][pivot_i];
         
             // Run row operation on input matrix
-            input[row_i][0] /= k;
-            input[row_i][1] /= k;
+            input[pivot_i][0] /= k;
+            input[pivot_i][1] /= k;
             // Run row operation on ouptut matrix
-            output[row_i][0] /= k;
-            output[row_i][1] /= k;
+            output[pivot_i][0] /= k;
+            output[pivot_i][1] /= k;
         }
 
-        // Eliminate the values under the pivot point
+        // Eliminate the values above the pivot point
         let k = input[0][1];
 
-        // Run row operation on input matrix
-        //input[0][0] -= input[1][0] * k;
-        //input[0][1] -= input[1][1] * k;
         // Run row operation on ouptut matrix
         output[0][0] -= output[1][0] * k;
         output[0][1] -= output[1][1] * k;
@@ -189,7 +186,7 @@ impl Mat3x3 {
     }
 
     /// Create a 3 by 3 identity matrix
-    pub fn indentity() -> Self {
+    pub fn identity() -> Self {
         Self::new([
             [1., 0., 0.],
             [0., 1., 0.],
@@ -211,6 +208,108 @@ impl Mat3x3 {
         self[0][0] * (self[1][1]*self[2][2] - self[1][2]*self[2][1]) -
         self[0][1] * (self[1][0]*self[2][2] - self[1][2]*self[2][0]) +
         self[0][2] * (self[1][0]*self[2][1] - self[1][1]*self[2][0])
+    }
+    
+    /// Return the inverse of the matrix if it exist
+    /// Return None otherwise
+    /// Uses the Gauss-Jordan Method
+    pub fn inverse(&self) -> Option<Self> {
+        let mut output = Self::identity();
+        let mut input = *self;
+
+        // Find the right pivot points
+        for pivot_i in 0..3 {
+            let mut pivot_v = input[pivot_i][pivot_i];
+            
+            // If the pivot is equal to 0 swap rows to
+            // the one with the highest abs
+            if pivot_v == 0. {
+                // Find the index to the row to swap
+                let mut highest_i: usize = 0;
+
+                for row_i in 0..3 {
+                    if input[row_i][pivot_i].abs() >= input[highest_i][pivot_i].abs() {
+                        highest_i = row_i;
+                    }
+                }
+
+                // If no new pivot point could be found return None
+                pivot_v = input[highest_i][pivot_i]; 
+                if pivot_v == 0. {
+                    return None;
+                } else {
+                    // If a new pivot point is found swap the pivot row
+                    // with the highest row in both input and output matrix
+                    input.m.swap(pivot_i, highest_i);
+                    output.m.swap(pivot_i, highest_i);
+                }
+            }
+        }
+
+        
+        // Eliminate the values under the pivot point
+        for col in 0..2 {
+            for row in (col + 1)..3 {
+                // Calcualate elimination constant
+                let k = input[row][col] / input[col][col];
+
+                // Run the elimination on the all the values in the row
+                input[row][0] -= k * input[col][0];
+                input[row][1] -= k * input[col][1];
+                input[row][2] -= k * input[col][2];
+
+                output[row][0] -= k * output[col][0];
+                output[row][1] -= k * output[col][1];
+                output[row][2] -= k * output[col][2];
+
+                // Set the coefficient to 0 to avoid rounding error
+                input[row][col] = 0.;
+            }
+        }
+
+        // Scale all pivot coefficient to 1.0
+        for pivot_i in 0..3 {
+            let k = input[pivot_i][pivot_i];
+        
+            // Run row operation on input and output matrix
+            input[pivot_i][0] /= k;
+            input[pivot_i][1] /= k;
+            input[pivot_i][2] /= k;
+
+            output[pivot_i][0] /= k;
+            output[pivot_i][1] /= k;
+            output[pivot_i][2] /= k;
+        }
+
+        // Eliminate the values above the pivot point
+        for row in 0..2 {
+            for col in (row + 1)..3 {
+                // Find elimination constant
+                let k = input[row][col];
+
+                // Run the elimination on the all the values in the row
+                input[row][0] -= k * input[col][0];
+                input[row][1] -= k * input[col][1];
+                input[row][2] -= k * input[col][2];
+
+                output[row][0] -= k * output[col][0];
+                output[row][1] -= k * output[col][1];
+                output[row][2] -= k * output[col][2];
+            }
+        }
+
+        // Check the output matrix for invalid result
+        // (NaN values, inf values)
+        for x in 0..3 {
+            for y in 0..3 {
+                if !output[x][y].is_finite() {
+                    return None;
+                }
+            }
+        }
+        
+        // If the result is valid retun it
+        Some(output)
     }
 
     /// Perform the matrix multiplication between a Vec3 and a Mat3x3
@@ -259,7 +358,7 @@ impl Mat3x3 {
     
     /// Return true if the difference between the values of the
     /// two matrices is smaller than epsilon
-    pub fn relative_eq(a: Mat2x2, b: Mat2x2, epsilon: f64) -> bool {
+    pub fn relative_eq(a: Mat3x3, b: Mat3x3, epsilon: f64) -> bool {
         // Check if all value are approximately equal
         for x in 0..3 {
             for y in 0..3 {
@@ -285,7 +384,7 @@ impl Mat4x4 {
     }
 
     /// Create a 3 by 3 identity matrix
-    pub fn indentity() -> Self {
+    pub fn identity() -> Self {
         Self::new([
             [1., 0., 0., 0.],
             [0., 1., 0., 0.],
@@ -326,6 +425,114 @@ impl Mat4x4 {
             m[0][1]*m[1][2]*m[2][3] + m[0][2]*m[1][3]*m[2][1] + m[0][3]*m[1][1]*m[2][2] -
             m[0][3]*m[1][2]*m[2][1] - m[0][2]*m[1][1]*m[2][3] - m[0][1]*m[1][3]*m[2][2] 
         )
+    }
+    
+    /// Return the inverse of the matrix if it exist
+    /// Return None otherwise
+    /// Uses the Gauss-Jordan Method
+    pub fn inverse(&self) -> Option<Self> {
+        let mut output = Self::identity();
+        let mut input = *self;
+
+        // Find the right pivot points
+        for pivot_i in 0..4 {
+            let mut pivot_v = input[pivot_i][pivot_i];
+            
+            // If the pivot is equal to 0 swap rows to
+            // the one with the highest abs
+            if pivot_v == 0. {
+                // Find the index to the row to swap
+                let mut highest_i: usize = 0;
+
+                for row_i in 0..4 {
+                    if input[row_i][pivot_i].abs() >= input[highest_i][pivot_i].abs() {
+                        highest_i = row_i;
+                    }
+                }
+
+                // If no new pivot point could be found return None
+                pivot_v = input[highest_i][pivot_i]; 
+                if pivot_v == 0. {
+                    return None;
+                } else {
+                    // If a new pivot point is found swap the pivot row
+                    // with the highest row in both input and output matrix
+                    input.m.swap(pivot_i, highest_i);
+                    output.m.swap(pivot_i, highest_i);
+                }
+            }
+        }
+
+        
+        // Eliminate the values under the pivot point
+        for col in 0..3 {
+            for row in (col + 1)..4 {
+                // Calcualate elimination constant
+                let k = input[row][col] / input[col][col];
+
+                // Run the elimination on the all the values in the row
+                input[row][0] -= k * input[col][0];
+                input[row][1] -= k * input[col][1];
+                input[row][2] -= k * input[col][2];
+                input[row][3] -= k * input[col][3];
+
+                output[row][0] -= k * output[col][0];
+                output[row][1] -= k * output[col][1];
+                output[row][2] -= k * output[col][2];
+                output[row][3] -= k * output[col][3];
+
+                // Set the coefficient to 0 to avoid rounding error
+                input[row][col] = 0.;
+            }
+        }
+
+        // Scale all pivot coefficient to 1.0
+        for pivot_i in 0..4 {
+            let k = input[pivot_i][pivot_i];
+        
+            // Run row operation on input and output matrix
+            input[pivot_i][0] /= k;
+            input[pivot_i][1] /= k;
+            input[pivot_i][2] /= k;
+            input[pivot_i][3] /= k;
+
+            output[pivot_i][0] /= k;
+            output[pivot_i][1] /= k;
+            output[pivot_i][2] /= k;
+            output[pivot_i][3] /= k;
+        }
+
+        // Eliminate the values above the pivot point
+        for row in 0..3 {
+            for col in (row + 1)..4 {
+                // Find elimination constant
+                let k = input[row][col];
+
+                // Run the elimination on the all the values in the row
+                input[row][0] -= k * input[col][0];
+                input[row][1] -= k * input[col][1];
+                input[row][2] -= k * input[col][2];
+                input[row][3] -= k * input[col][3];
+
+                output[row][0] -= k * output[col][0];
+                output[row][1] -= k * output[col][1];
+                output[row][2] -= k * output[col][2];
+                output[row][3] -= k * output[col][3];
+            }
+        }
+
+        // Check the output matrix for invalid result
+        // (NaN values, inf values)
+        for x in 0..4 {
+            for y in 0..4 {
+                if !output[x][y].is_finite() {
+                    return None;
+                }
+            }
+        }
+        
+        // If the result is valid retun it
+        Some(output)
     }
 
     /// Perform the matrix multiplication between a Vec4 and a Mat4x4
@@ -394,7 +601,7 @@ impl Mat4x4 {
 
     /// Return true if the difference between the values of the
     /// two matrices is smaller than epsilon
-    pub fn relative_eq(a: Mat2x2, b: Mat2x2, epsilon: f64) -> bool {
+    pub fn relative_eq(a: Mat4x4, b: Mat4x4, epsilon: f64) -> bool {
         // Check if all value are approximately equal
         for x in 0..4 {
             for y in 0..4 {
