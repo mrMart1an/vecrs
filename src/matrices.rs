@@ -651,7 +651,7 @@ impl Debug for Mat4x4 {
             self[0],
             self[1],
             self[2],
-            self[4],
+            self[3],
         )    
     }
 }
