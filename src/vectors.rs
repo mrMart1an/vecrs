@@ -25,7 +25,7 @@ pub struct Vec2 {
     pub y: f64,
 }
 
-// Implement constructor and uitility functions for Vec4
+// Implement constructor and utility functions for Vec4
 impl Vec4 {
     /// Construct a new Vec4 with the given coordinates
     /// Take 4 float64 as input
@@ -57,25 +57,25 @@ impl Vec4 {
         }
     }
 
-    /// Calculate the squared lenght of the vector and return a float
+    /// Calculate the squared length of the vector and return a float
     pub fn lenght_sq(&self) -> f64 {
         self.x.powi(2) + self.y.powi(2) + self.z.powi(2) + self.w.powi(2)
     }
 
-    /// Calculate the lenght of the vector and return a float
+    /// Calculate the length of the vector and return a float
     pub fn lenght(&self) -> f64 {
         self.lenght_sq().sqrt()
     }
 
     /// Return the normalized vector
-    /// (Keep direction but make the lenght 1.0)
+    /// (Keep direction but make the length 1.0)
     pub fn normalize(self) -> Self {
         self / self.lenght()
     }
 
     /// Return the dot product of two vector
-    /// Take a reference to two vectors as input
-    pub fn dot(va: &Self, vb: &Self) -> f64 {
+    /// Take two vectors as input
+    pub fn dot(va: Self, vb: Self) -> f64 {
         (va.x * vb.x) + 
         (va.y * vb.y) +
         (va.z * vb.z) +
@@ -92,7 +92,7 @@ impl Vec4 {
     }
 }
 
-// Implement constructor and uitility functions for Vec3
+// Implement constructor and utility functions for Vec3
 impl Vec3 {
     /// Construct a new Vec3 with the given coordinates
     /// Take 3 float64 as input
@@ -101,8 +101,8 @@ impl Vec3 {
     }
 
     /// Construct a new Vec3 from a given Vec2 and a scalar for the z axis
-    /// Take as input a reference to a Vec2 and a float64
-    pub fn from_vec2(v: &Vec2, z: f64) -> Self {
+    /// Take as input a Vec2 and a float64
+    pub fn from_vec2(v: Vec2, z: f64) -> Self {
         Self { 
             x: v.x,
             y: v.y,
@@ -122,33 +122,33 @@ impl Vec3 {
         }
     }
 
-    /// Calculate the squared lenght of the vector and return a float
+    /// Calculate the squared length of the vector and return a float
     pub fn lenght_sq(&self) -> f64 {
         self.x.powi(2) + self.y.powi(2) + self.z.powi(2)
     }
     
-    /// Calculate the lenght of the vector and return a float
+    /// Calculate the length of the vector and return a float
     pub fn lenght(&self) -> f64 {
         self.lenght_sq().sqrt()
     }
 
     /// Return the normalized vector
-    /// (Keep direction but make the lenght 1.0)
+    /// (Keep direction but make the length 1.0)
     pub fn normalize(self) -> Self {
         self / self.lenght()
     }
 
     /// Return the dot product of two vector
-    /// Take a reference to two vectors as input
-    pub fn dot(va: &Self, vb: &Self) -> f64 {
+    /// Take two vectors as input
+    pub fn dot(va: Self, vb: Self) -> f64 {
         (va.x * vb.x) + 
         (va.y * vb.y) +
         (va.z * vb.z)
     }
 
     /// Return the cross product of two Vec3
-    /// Take a reference to two vectors as input
-    pub fn cross(va: &Self, vb: &Self) -> Self {
+    /// Take two vectors as input
+    pub fn cross(va: Self, vb: Self) -> Self {
         Self { 
             x: (va.y * vb.z) - (va.z * vb.y), 
             y: (va.z * vb.x) - (va.x * vb.z), 
@@ -165,7 +165,7 @@ impl Vec3 {
     }
 }
 
-// Implement constructor and uitility functions for Vec2
+// Implement constructor and utility functions for Vec2
 impl Vec2 {
     /// Construct a new Vec3 with the given coordinates
     pub fn new(x: f64, y: f64) -> Self {
@@ -183,25 +183,25 @@ impl Vec2 {
         }
     }
 
-    /// Calculate the squared lenght of the vector and return a float
+    /// Calculate the squared length of the vector and return a float
     pub fn lenght_sq(&self) -> f64 {
         self.x.powi(2) + self.y.powi(2)
     }
 
-    /// Calculate the lenght of the vector and return a float
+    /// Calculate the length of the vector and return a float
     pub fn lenght(&self) -> f64 {
         self.lenght_sq().sqrt()
     }
 
     /// Return the normalized vector
-    ///(Keep direction but make the lenght 1.0)
+    ///(Keep direction but make the length 1.0)
     pub fn normalize(self) -> Self {
         self / self.lenght()
     }
     
     /// Return the dot product of two vector
-    /// Take a reference to a vector as one of the input
-    pub fn dot(va: &Self, vb: &Self) -> f64 {
+    /// Take to a vector as one of the input
+    pub fn dot(va: Self, vb: Self) -> f64 {
         (va.x * vb.x) + 
         (va.y * vb.y) 
     }

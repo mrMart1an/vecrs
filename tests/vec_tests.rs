@@ -11,7 +11,7 @@ fn vec2_dot() {
     let actual = 26f64;
 
     // Check the result
-    assert_eq!(actual, Vec2::dot(&a, &b));
+    assert_eq!(actual, Vec2::dot(a, b));
 }
 
 // Test Vec3 dot product
@@ -23,7 +23,7 @@ fn vec3_dot() {
     let actual = 58f64;
 
     // Check the result
-    assert_eq!(actual, Vec3::dot(&a, &b));
+    assert_eq!(actual, Vec3::dot(a, b));
 }
 
 // Test Vec4 dot product
@@ -35,7 +35,7 @@ fn vec4_dot() {
     let actual = 108f64;
 
     // Check the result
-    assert_eq!(actual, Vec4::dot(&a, &b));
+    assert_eq!(actual, Vec4::dot(a, b));
 }
 
 // Test vector by vector operators

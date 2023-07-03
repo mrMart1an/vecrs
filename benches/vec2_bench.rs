@@ -2,7 +2,7 @@ use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use vecrs::vectors::Vec2;
 
 
-// Becnhmrk the normalization function
+// Benchmark the normalization function
 pub fn vec2_normilze(c: &mut Criterion) {
     let a = black_box(Vec2::new(1.,2.));
 
@@ -14,7 +14,7 @@ pub fn vec2_dot(c: &mut Criterion) {
     let a_vec = black_box(Vec2::new(1.,2.));
     let b_vec = black_box(Vec2::new(2.,3.));
 
-    c.bench_function("vec2 dot", |b| b.iter(|| Vec2::dot(&a_vec, &b_vec)));
+    c.bench_function("vec2 dot", |b| b.iter(|| Vec2::dot(a_vec, b_vec)));
 }
 
 // Benchmark the add function
@@ -25,14 +25,14 @@ pub fn vec2_add(c: &mut Criterion) {
     c.bench_function("vec2 add", |b| b.iter(|| a_vec + b_vec));
 }
 
-// Becnhmrk the add and the dot operation
+// Benchmark the add and the dot operation
 pub fn vec2_add_dot(c: &mut Criterion) {
     let a_vec = black_box(Vec2::new(1.,2.));
     let b_vec = black_box(Vec2::new(2.,3.));
 
     c.bench_function("vec2 add + dot", |b| b.iter(|| {
         let res = a_vec + b_vec;
-        Vec2::dot(&a_vec, &res)
+        Vec2::dot(a_vec, res)
     }));
 }
 

@@ -90,7 +90,7 @@ impl Mat2x2 {
         // Run row operation on input matrix
         input[1][0] -= 0.;
         input[1][1] -= k * input[0][1];
-        // Run row operation on ouptut matrix
+        // Run row operation on output matrix
         output[1][0] -= k * output[0][0];
         output[1][1] -= k * output[0][1];
 
@@ -101,7 +101,7 @@ impl Mat2x2 {
             // Run row operation on input matrix
             input[pivot_i][0] /= k;
             input[pivot_i][1] /= k;
-            // Run row operation on ouptut matrix
+            // Run row operation on output matrix
             output[pivot_i][0] /= k;
             output[pivot_i][1] /= k;
         }
@@ -109,7 +109,7 @@ impl Mat2x2 {
         // Eliminate the values above the pivot point
         let k = input[0][1];
 
-        // Run row operation on ouptut matrix
+        // Run row operation on output matrix
         output[0][0] -= output[1][0] * k;
         output[0][1] -= output[1][1] * k;
 
@@ -123,7 +123,7 @@ impl Mat2x2 {
             }
         }
         
-        // If the result is valid retun it
+        // If the result is valid return it
         Some(output)
     }
 
@@ -137,7 +137,7 @@ impl Mat2x2 {
     }
     
     /// Perform the matrix multiplication of two matrices
-    /// and return the reuslt as a new matrix
+    /// and return the result as a new matrix
     pub fn dot(a: &Mat2x2, b: &Mat2x2) -> Self {
         Self::new([[
             a[0][0]*b[0][0] + a[0][1]*b[1][0],
@@ -250,7 +250,7 @@ impl Mat3x3 {
         // Eliminate the values under the pivot point
         for col in 0..2 {
             for row in (col + 1)..3 {
-                // Calcualate elimination constant
+                // Calculate elimination constant
                 let k = input[row][col] / input[col][col];
 
                 // Run the elimination on the all the values in the row
@@ -308,7 +308,7 @@ impl Mat3x3 {
             }
         }
         
-        // If the result is valid retun it
+        // If the result is valid return it
         Some(output)
     }
 
@@ -323,7 +323,7 @@ impl Mat3x3 {
     }
 
     /// Perform the matrix multiplication of two matrices
-    /// and return the reuslt as a new matrix
+    /// and return the result as a new matrix
     pub fn dot(a: &Mat3x3, b: &Mat3x3) -> Self {
         Self::new([[
             a[0][0]*b[0][0] + a[0][1]*b[1][0] + a[0][2]*b[2][0],
@@ -467,7 +467,7 @@ impl Mat4x4 {
         // Eliminate the values under the pivot point
         for col in 0..3 {
             for row in (col + 1)..4 {
-                // Calcualate elimination constant
+                // Calculate elimination constant
                 let k = input[row][col] / input[col][col];
 
                 // Run the elimination on the all the values in the row
@@ -531,7 +531,7 @@ impl Mat4x4 {
             }
         }
         
-        // If the result is valid retun it
+        // If the result is valid return it
         Some(output)
     }
 

@@ -197,7 +197,7 @@ fn mat2x2_determinant() {
         [3., 4.],
     ]);
 
-    // Test fucntion
+    // Test function
     assert_eq!(matrix.determinant(), -2.)
 }
 
@@ -210,7 +210,7 @@ let matrix = Mat3x3::new([
         [7., 8., 9.],
     ]);
 
-    // Test fucntion
+    // Test function
     assert_eq!(matrix.determinant(), 0.)
 }
 
@@ -224,7 +224,7 @@ let matrix = Mat4x4::new([
         [13., 14., 15., 16.],
     ]);
 
-    // Test fucntion
+    // Test function
     assert_eq!(matrix.determinant(), 0.)
 }
 
@@ -307,7 +307,7 @@ fn mat2x2_dot() {
     // check the dot function
     assert_eq!(Mat2x2::dot(&a, &b), result, "Mat2x2: dot test");
 
-    // ouput matrix for the dot_ref operation
+    // output matrix for the dot_ref operation
     let mut output = Mat2x2::default();
     Mat2x2::dot_ref(&a, &b, &mut output);
     assert_eq!(output, result, "Mat2x2: dot_ref test");
@@ -370,7 +370,7 @@ fn mate4x4_dot() {
     // check the dot function
     assert_eq!(Mat4x4::dot(&a, &b), result, "Mat4x4: dot test");
 
-    // ouput matrix for the dot_ref operation
+    // output matrix for the dot_ref operation
     let mut output = Mat4x4::default();
     Mat4x4::dot_ref(&a, &b, &mut output);
     assert_eq!(output, result, "Mat4x4: dot_ref test");
